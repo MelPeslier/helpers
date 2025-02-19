@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://m421uesxdrcq"]
+
+[ext_resource type="Texture2D" uid="uid://c8dwvrl40jffc" path="res://icon.svg" id="1_wwe2r"]
+[ext_resource type="Script" uid="uid://rdn2eimck6ih" path="res://addons/helpers/offset_helper/demo/test_offset_helper.gd" id="2_ir4du"]
+[ext_resource type="Script" uid="uid://b2cisi4137aa" path="res://addons/helpers/offset_helper/offset_helper.gd" id="3_ir4du"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(523, 339)
+texture = ExtResource("1_wwe2r")
+script = ExtResource("2_ir4du")
+
+[node name="OffsetHelper" type="Node" parent="Icon"]
+script = ExtResource("3_ir4du")
+metadata/_custom_type_script = ExtResource("3_ir4du")
