@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyeau28n3lsb7"]
+
+[ext_resource type="Script" uid="uid://b38mo6qih1ggb" path="res://addons/bymel/components/movement/velocity/platformer_velocity_component.gd" id="1_eas21"]
+[ext_resource type="Script" uid="uid://b2ll3yhqs5uxu" path="res://addons/bymel/components/movement/velocity/velocity_force.gd" id="2_c11uu"]
+
+[sub_resource type="Resource" id="Resource_766sh"]
+script = ExtResource("2_c11uu")
+distance = 486.635
+time_to = 0.1
+metadata/_custom_type_script = ExtResource("2_c11uu")
+
+[node name="PlatformerVelocityComponent" type="Node"]
+script = ExtResource("1_eas21")
+speed_max = SubResource("Resource_766sh")
+metadata/_custom_type_script = ExtResource("1_eas21")

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://biwxfibdwkgnc"]
+
+[ext_resource type="Script" uid="uid://34ri31ax15d4" path="res://addons/bymel/plugin_display/curve/curve_display.gd" id="1_2dngh"]
+[ext_resource type="Texture2D" uid="uid://c8dwvrl40jffc" path="res://icon.svg" id="2_1gicq"]
+
+[node name="CurveDisplay" type="Control"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2dngh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1gicq")

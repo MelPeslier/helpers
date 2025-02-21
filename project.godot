@@ -16,11 +16,11 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-TweenHelper="*res://addons/helpers/tween/tween_helper.gd"
+TweenHelper="*res://addons/bymel/helpers/tween/tween_helper.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/components/plugin.cfg", "res://addons/helpers/plugin.cfg")
+enabled=PackedStringArray("res://addons/bymel/plugin.cfg")
 
 [rendering]
 

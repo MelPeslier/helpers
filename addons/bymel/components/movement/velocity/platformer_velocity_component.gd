@@ -1,15 +1,15 @@
 class_name PlatformerVelocityComponent
 extends Node
 
-
-@export var speed_max: float = 500.0 : set = _set_speed_max
+@export var speed_max: VelocityForce : set = _set_speed_max
 @export_range(0.01, 2.0, 0.001, "suffix:s") var accel_time : float = 0.3 : set = _set_accel_time
 @export_range(0.01, 2.0, 0.001, "suffix:s") var decel_time : float = 0.1 : set = _set_decel_time
 
 
-var speed : float = 0
-var accel : float = 0
-var decel : float = 0
+var speed : float = 0.0
+var accel : float = 0.0
+var decel : float = 0.0
+var gravity : float = 0.0
 
 
 func _ready() -> void:
@@ -19,7 +19,7 @@ func _ready() -> void:
 ## Call it constantly
 func custom_process(delta: float, _dir : float) -> void:
 	var no_dir: bool = is_zero_approx(_dir)
-	var not_same_dir: bool = not is_equal_approx( signf(speed),  signf(_dir) )
+	var not_same_dir: bool = speed !=0 and not is_equal_approx( signf(speed),  signf(_dir) )
 	if no_dir or not_same_dir:
 		decelerate(delta, _dir)
 	if not no_dir:
@@ -33,7 +33,8 @@ func move(character_body: CharacterBody2D) -> void:
 
 
 func accelerate(delta: float, _dir: float) -> void:
-	speed = clampf( speed + accel * _dir * delta, - speed_max * absf(_dir), speed_max * absf(_dir) )
+	speed = clampf( speed + accel * _dir * delta, -speed_max.force, speed_max.force)
+	print(speed)
 
 
 func decelerate(delta: float, _dir: float) -> void:
@@ -54,20 +55,20 @@ func decelerate(delta: float, _dir: float) -> void:
 #region private
 func _set_accel_time(_accel_time: float) -> void:
 	accel_time = _accel_time
-	accel = MovementMath.get_velocity_by_time(speed_max, accel_time)
+	_actualise_velocities()
 
 
 func _set_decel_time(_decel_time: float) -> void:
 	decel_time = _decel_time
-	decel = MovementMath.get_velocity_by_time(speed_max, decel_time)
+	_actualise_velocities()
 
 
-func _set_speed_max(_speed_max: float) -> void:
-	speed_max = _speed_max
+func _set_speed_max(_speed_max: VelocityForce) -> void:
+	print(_speed_max.force)
 	_actualise_velocities()
 
 
 func _actualise_velocities() -> void:
-	accel = accel
-	decel = decel
+	accel = MovementMath.get_velocity_by_time(speed_max.force, accel_time)
+	decel = MovementMath.get_velocity_by_time(speed_max.force, decel_time)
 #endregion
