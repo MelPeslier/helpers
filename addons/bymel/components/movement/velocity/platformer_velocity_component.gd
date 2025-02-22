@@ -1,15 +1,15 @@
 class_name PlatformerVelocityComponent
 extends Node
 
-@export var speed_max: VelocityForce : set = _set_speed_max
-@export_range(0.01, 2.0, 0.001, "suffix:s") var accel_time : float = 0.3 : set = _set_accel_time
-@export_range(0.01, 2.0, 0.001, "suffix:s") var decel_time : float = 0.1 : set = _set_decel_time
+@export var speed_max: ForceTimeData : set = _set_speed_max
 
+
+
+var accel : ForceTimeData
+var decel : ForceTimeData
+var gravity : GravityTimeData
 
 var speed : float = 0.0
-var accel : float = 0.0
-var decel : float = 0.0
-var gravity : float = 0.0
 
 
 func _ready() -> void:
@@ -33,12 +33,12 @@ func move(character_body: CharacterBody2D) -> void:
 
 
 func accelerate(delta: float, _dir: float) -> void:
-	speed = clampf( speed + accel * _dir * delta, -speed_max.force, speed_max.force)
+	speed = clampf( speed + accel.force * _dir * delta, -speed_max.force, speed_max.force)
 	print(speed)
 
 
 func decelerate(delta: float, _dir: float) -> void:
-	speed = maxf( abs(speed) - decel * delta, 0 ) * signf(speed)
+	speed = maxf( abs(speed) - decel.force * delta, 0 ) * signf(speed)
 
 
 #func _decelerate_on_opposite_dir(delta: float, _dir: float) -> void:
@@ -53,22 +53,14 @@ func decelerate(delta: float, _dir: float) -> void:
 
 
 #region private
-func _set_accel_time(_accel_time: float) -> void:
-	accel_time = _accel_time
-	_actualise_velocities()
 
 
-func _set_decel_time(_decel_time: float) -> void:
-	decel_time = _decel_time
-	_actualise_velocities()
-
-
-func _set_speed_max(_speed_max: VelocityForce) -> void:
-	print(_speed_max.force)
+func _set_speed_max(_speed_max: ForceTimeData) -> void:
+	print("ok")
 	_actualise_velocities()
 
 
 func _actualise_velocities() -> void:
-	accel = MovementMath.get_velocity_by_time(speed_max.force, accel_time)
-	decel = MovementMath.get_velocity_by_time(speed_max.force, decel_time)
+	accel.distance = speed_max.force
+	decel.distance = speed_max.force
 #endregion
