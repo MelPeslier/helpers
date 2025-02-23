@@ -1,18 +1,19 @@
+@tool
 class_name PlatformerVelocityComponent
 extends Node
 
-@export var speed_max: ForceTimeData : set = _set_speed_max
+@export var speed_max: ForceTimeData
 
-
-
-var accel : ForceTimeData
-var decel : ForceTimeData
-var gravity : GravityTimeData
+@export var accel : ForceTimeData
+@export var decel : ForceTimeData
+@export var gravity : ForceData
 
 var speed : float = 0.0
-
+var gravity_final : float = 0.0
 
 func _ready() -> void:
+	if speed_max:
+		speed_max.force_changed.connect(_on_speed_max_force_changed)
 	_actualise_velocities()
 
 #region public
@@ -21,7 +22,7 @@ func custom_process(delta: float, _dir : float) -> void:
 	var no_dir: bool = is_zero_approx(_dir)
 	var not_same_dir: bool = speed !=0 and not is_equal_approx( signf(speed),  signf(_dir) )
 	if no_dir or not_same_dir:
-		decelerate(delta, _dir)
+		decelerate(delta)
 	if not no_dir:
 		accelerate(delta, _dir)
 
@@ -37,7 +38,7 @@ func accelerate(delta: float, _dir: float) -> void:
 	print(speed)
 
 
-func decelerate(delta: float, _dir: float) -> void:
+func decelerate(delta: float) -> void:
 	speed = maxf( abs(speed) - decel.force * delta, 0 ) * signf(speed)
 
 
@@ -55,12 +56,17 @@ func decelerate(delta: float, _dir: float) -> void:
 #region private
 
 
-func _set_speed_max(_speed_max: ForceTimeData) -> void:
-	print("ok")
+func _on_speed_max_force_changed(_new_force: float) -> void:
 	_actualise_velocities()
 
 
 func _actualise_velocities() -> void:
-	accel.distance = speed_max.force
-	decel.distance = speed_max.force
+	if accel:
+		accel.distance = speed_max.force
+	if decel:
+		decel.distance = speed_max.force
+	if gravity is GravityTimeData:
+		gravity.distance = speed_max.force
+	elif gravity is GravityDistanceData:
+		gravity.vel_x = speed_max.force
 #endregion

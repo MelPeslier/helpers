@@ -1,13 +1,11 @@
 @tool
 class_name ForceDistanceData
-extends Resource
+extends ForceData
 
 @export var height_peak : float : set = _set_height_peak
 @export var vel_x : float : set = _set_vel_x
 @export var distance_x_to_peak : float : set = _set_distance_x_to_peak
 
-
-@export var force : float = 0.0
 
 
 func _set_height_peak(_height_peak: float) -> void:
