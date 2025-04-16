@@ -22,7 +22,7 @@ metadata/_custom_type_script = ExtResource("2_c11uu")
 script = ExtResource("2_c11uu")
 distance = 779.221
 time_to = 0.2
-force = 3896.1
+force = 3896.11
 metadata/_custom_type_script = ExtResource("2_c11uu")
 
 [sub_resource type="Resource" id="Resource_ulpj1"]
@@ -39,4 +39,4 @@ speed_max = SubResource("Resource_c11uu")
 accel = SubResource("Resource_766sh")
 decel = SubResource("Resource_umumh")
 gravity = SubResource("Resource_ulpj1")
-metadata/_custom_type_script = ExtResource("1_eas21")
+metadata/_custom_type_script = "uid://b38mo6qih1ggb"
