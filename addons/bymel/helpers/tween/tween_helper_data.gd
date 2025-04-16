@@ -53,9 +53,12 @@ func set_data(_tween: Tween) -> void:
 
 ## Return the interval to call in sequence
 ## Example in the [TweenHelper] 
-func sample_interval(_point_index: int, _point_count: int) -> float:
+func sample_interval(_point_index: int, _point_count: int, _as_coef: bool = false) -> float:
 	var x : float = remap( float(_point_index), 0.0, float(_point_count-1), 0.0, 1.0 )
-	var y = sample(x) * duration
+	if _point_count == 1: x = 0.0
+	var y: float = sample(x)
+	if not _as_coef:
+		y *= duration
 	return y
 
 
@@ -97,14 +100,14 @@ func _update_curve():
 
 
 func _set_use_custom_curve(_use: bool) -> void:
-	use_custom_curve = _use
-	if use_custom_curve:
+	if not use_custom_curve and _use:
 		clear_points()
 		min_value = 0.0
 		max_value = 1.0
 		add_point(Vector2.ZERO)
 		add_point(Vector2.ONE)
 		return
+	use_custom_curve = _use
 	_update_curve()
 
 
